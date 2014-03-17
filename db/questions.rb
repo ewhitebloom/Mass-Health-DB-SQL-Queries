@@ -8,7 +8,7 @@ TownHealthRecord.where('population_0_to_19_2005 is not null').order('population_
 TownHealthRecord.where('per_capita_income_2000 is not null').order('per_capita_income_2000 asc').limit(5)
 
 # -- Omitting Boston, Becket, and Beverly, what town has the highest percentage of teen births?
-select town, percent_teen_births_2005_to_2008 from town_health_records WHERE percent_teen_births_2005_to_2008 IS NOT NULL AND town NOT in ('Boston', 'Becket', 'Beverly') order by percent_teen_births_2005_to_2008 desc limit 1;
+TownHealthRecord.where('percent_teen_births_2005_to_2008 is not null', :town => ['Boston', 'Becket', 'Beverly']).order('percent_teen_births_2005_to_2008 desc').limit(1)
 
 # -- Omitting Boston, what town has the highest number of infant mortalities?
 select town, infant_mortality_rate_per_thousand_2005_to_2008 from town_health_records where infant_mortality_rate_per_thousand_2005_to_2008 IS NOT NULL AND town NOT IN ('Boston') order by infant_mortality_rate_per_thousand_2005_to_2008 desc limit 1;
