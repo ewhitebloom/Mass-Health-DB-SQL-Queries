@@ -33,4 +33,4 @@ TownHealthRecord.where.not("town ilike 'w%'").count
 
 # -- How many towns have a lower per capita income that of Boston?
 SELECT COUNT(DISTINCT town) FROM town_health_records where per_capita_income_2000 < (select per_capita_income_2000 from town_health_records where town = 'Boston');
-TownHealthRecord.where("per_capita_income_2000 < #{TownHealthRecord.where(:town => 'Boston').pluck(:per_capita_income_2000)}.to_f").count
+TownHealthRecord.where(per_capita_income_2000 < TownHealthRecord.where(:town =>'Boston').pluck(:per_capita_income_2000)).count
