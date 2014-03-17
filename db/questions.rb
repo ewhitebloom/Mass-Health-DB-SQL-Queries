@@ -14,8 +14,7 @@ TownHealthRecord.where('percent_teen_births_2005_to_2008 is not null').where.not
 TownHealthRecord.where('infant_mortality_rate_per_thousand_2005_to_2008 IS NOT NULL').where.not(:town => 'Boston').order('infant_mortality_rate_per_thousand_2005_to_2008 desc').limit(1).pluck(:town)
 
 # -- Of the 5 towns with the highest per capita income, which one has the highest number of people below the poverty line?
-select town from town_health_records where town in (select town from town_health_records where per_capita_income_2000 IS NOT NULL AND  percent_persons_below_poverty_2000 IS NOT NULL order by per_capita_income_2000 desc, percent_persons_below_poverty_2000 desc limit 5) order by percent_persons_below_poverty_2000 desc limit 1;
-TownHealthRecord.where(:town => (TownHealthRecord.where('per_capita_income_2000 IS NOT NULL').where('percent_persons_below_poverty_2000 IS NOT NULL').order('per_capita_income_2000 desc').limit(5))).order('percent_persons_below_poverty_2000 desc').limit(1).pluck(:town)
+TownHealthRecord.where(:town => (TownHealthRecord.where('per_capita_income_2000 IS NOT NULL').where('percent_persons_below_poverty_2000 IS NOT NULL').order('per_capita_income_2000 desc').limit(5)).pluck(:town)).order('percent_persons_below_poverty_2000 desc').limit(1).pluck(:town)
 
 # -- Of the towns that start with the letter b, which has the highest population?
 TownHealthRecord.where("town ilike 'b%'").order('total_population_2005 desc').limit(1).pluck(:town)
