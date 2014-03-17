@@ -2,10 +2,10 @@
 TownHealthRecord.where('population_greater_than_65_2005 IS NOT Null').order('population_greater_than_65_2005 desc').limit(5)
 
 # What 3 towns have the highest population of citizens that are 19 years and younger?
-select town, population_0_to_19_2005 from town_health_records where population_0_to_19_2005 IS NOT NULL order by population_0_to_19_2005 desc limit 3;
+TownHealthRecord.where('population_0_to_19_2005 is not null').order('population_0_to_19_2005 desc').limit(3)
 
 # -- What 5 towns have the lowest per capita income?
-select town, per_capita_income_2000 from town_health_records order by per_capita_income_2000 asc limit 5;
+TownHealthRecord.where('per_capita_income_2000 is not null').order('per_capita_income_2000 asc').limit(5)
 
 # -- Omitting Boston, Becket, and Beverly, what town has the highest percentage of teen births?
 select town, percent_teen_births_2005_to_2008 from town_health_records WHERE percent_teen_births_2005_to_2008 IS NOT NULL AND town NOT in ('Boston', 'Becket', 'Beverly') order by percent_teen_births_2005_to_2008 desc limit 1;
