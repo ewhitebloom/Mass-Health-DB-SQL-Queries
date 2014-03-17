@@ -27,7 +27,7 @@ TownHealthRecord.where('infant_mortality_rate_per_thousand_2005_to_2008 is not n
 TownHealthRecord.where('percent_multiple_births_2005_to_2008 is not null').order('percent_multiple_births_2005_to_2008 desc').limit(1)
 
 # -- What is the percent adequacy of prenatal care in that town?
-select town, percent_adequacy_pre_natal_care from town_health_records where percent_multiple_births_2005_to_2008 is not null order by  percent_multiple_births_2005_to_2008 desc limit 1;
+TownHealthRecord.where('percent_multiple_births_2005_to_2008 is not null').order('percent_multiple_births_2005_to_2008 desc').limit(1).pluck(:percent_adequacy_pre_natal_care)
 
 # -- Excluding towns that start with W, how many towns are part of this data?
 SELECT COUNT(DISTINCT town) FROM town_health_records where town not ilike 'w%';
