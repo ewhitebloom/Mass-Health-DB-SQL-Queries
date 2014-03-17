@@ -30,7 +30,8 @@ TownHealthRecord.where('percent_multiple_births_2005_to_2008 is not null').order
 TownHealthRecord.where('percent_multiple_births_2005_to_2008 is not null').order('percent_multiple_births_2005_to_2008 desc').limit(1).pluck(:percent_adequacy_pre_natal_care)
 
 # -- Excluding towns that start with W, how many towns are part of this data?
-SELECT COUNT(DISTINCT town) FROM town_health_records where town not ilike 'w%';
+TownHealthRecord.where.not("town ilike 'w%'").count
 
 # -- How many towns have a lower per capita income that of Boston?
 SELECT COUNT(DISTINCT town) FROM town_health_records where per_capita_income_2000 < (select per_capita_income_2000 from town_health_records where town = 'Boston');
+TownHealthRecord.where("per_capita_income_2000 < TownHealthRecord.where('town = Boston').pluck(:per_capita_income_2000)").count
