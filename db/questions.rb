@@ -1,5 +1,5 @@
 # What 3 towns have the highest population of citizens that are 65 years and older?
-select town, population_greater_than_65_2005 from town_health_records where population_greater_than_65_2005 IS NOT NULL order by population_greater_than_65_2005 desc limit 3;
+TownHealthRecord.where('population_greater_than_65_2005 IS NOT Null').order('population_greater_than_65_2005 desc').limit(5)
 
 # What 3 towns have the highest population of citizens that are 19 years and younger?
 select town, population_0_to_19_2005 from town_health_records where population_0_to_19_2005 IS NOT NULL order by population_0_to_19_2005 desc limit 3;
