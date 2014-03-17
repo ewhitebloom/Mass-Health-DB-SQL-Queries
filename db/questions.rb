@@ -8,13 +8,14 @@ TownHealthRecord.where('population_0_to_19_2005 is not null').order('population_
 TownHealthRecord.where('per_capita_income_2000 is not null').order('per_capita_income_2000 asc').limit(5)
 
 # -- Omitting Boston, Becket, and Beverly, what town has the highest percentage of teen births?
-TownHealthRecord.where('percent_teen_births_2005_to_2008 is not null', :town => ['Boston', 'Becket', 'Beverly']).order('percent_teen_births_2005_to_2008 desc').limit(1)
+TownHealthRecord.where('percent_teen_births_2005_to_2008 is not null').where.not(:town => ['Boston', 'Becket', 'Beverly']).order('percent_teen_births_2005_to_2008 desc').limit(1)
 
 # -- Omitting Boston, what town has the highest number of infant mortalities?
-select town, infant_mortality_rate_per_thousand_2005_to_2008 from town_health_records where infant_mortality_rate_per_thousand_2005_to_2008 IS NOT NULL AND town NOT IN ('Boston') order by infant_mortality_rate_per_thousand_2005_to_2008 desc limit 1;
+TownHealthRecord.where('infant_mortality_rate_per_thousand_2005_to_2008 IS NOT NULL').where.not(:town => 'Boston').order('infant_mortality_rate_per_thousand_2005_to_2008 desc').limit(1)
 
 # -- Of the 5 towns with the highest per capita income, which one has the highest number of people below the poverty line?
 select town from town_health_records where town in (select town from town_health_records where per_capita_income_2000 IS NOT NULL AND  percent_persons_below_poverty_2000 IS NOT NULL order by per_capita_income_2000 desc, percent_persons_below_poverty_2000 desc limit 5) order by percent_persons_below_poverty_2000 desc limit 1;
+TownHealthRecord.where(:town => (TownHealthRecord.where('per_capita_income_2000 IS NOT NULL').where('percent_persons_below_poverty_2000 IS NOT NULL').order('per_capita_income_2000 desc').order('percent_persons_below_poverty_2000 desc').limit(5))).order('percent_persons_below_poverty_2000 desc').limit(1)
 
 # -- Of the towns that start with the letter b, which has the highest population?
 select town, total_population_2005 from town_health_records where town ilike 'b%' order by total_population_2005 desc limit 1;
